@@ -1,29 +1,44 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Signup.css"; // Import the CSS file
+// import { set } from "mongoose";
+
 
 function Signup() {
-  const [userId, setUserId] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repassword, setRepassword] = useState("");
+  const [userID, setuserID] = useState("");
+  const [adminEmail, setAdminEmail] = useState("");
+  const [pass, setpass] = useState("");
+  const [repass, setRepass] = useState("");
   const [accessKey, setAccessKey] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(pass !== repass) {
+      alert("passs do not match");
+      return;
+    }
+    else if(accessKey !== "1234567890") {
+      alert("Incorrect Access Key");
+      return;
+    }
     try {
       const response = await axios.post("/admin/signup", {
-        userId,
-        email,
-        password,
-        repassword,
-        accessKey,
+        userId : userID,
+        email: adminEmail,
+        password: pass
       });
-      console.log("Signup successful", response.data);
+      if(response.status === 201) {
+        alert(response.data.status);
+        window.location.href = "/login";
+      }
+      else {
+        alert("Error during signup");
+      }
     } catch (error) {
       console.error("Error during signup", error);
     }
+
   };
 
   return (
@@ -36,8 +51,8 @@ function Signup() {
               User ID:
               <input
                 type="text"
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
+                value={userID}
+                onChange={(e) => setuserID(e.target.value)}
               />
             </label>
           </div>
@@ -46,8 +61,8 @@ function Signup() {
               Email:
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={adminEmail}
+                onChange={(e) => setAdminEmail(e.target.value)}
               />
             </label>
           </div>
@@ -56,18 +71,18 @@ function Signup() {
               Password:
               <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={pass}
+                onChange={(e) => setpass(e.target.value)}
               />
             </label>
           </div>
           <div>
             <label>
-              Re-enter Password:
+              Re-enter password:
               <input
                 type="password"
-                value={repassword}
-                onChange={(e) => setRepassword(e.target.value)}
+                value={repass}
+                onChange={(e) => setRepass(e.target.value)}
               />
             </label>
           </div>

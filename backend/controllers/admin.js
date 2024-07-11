@@ -5,17 +5,6 @@ const accessKey = "1234567890";
 
 async function adminSignup(req, res) {
     const body = req.body;
-
-    const password = body.password;
-    const password2 = body.repassword;
-
-    if (password !== password2) {
-        return res.json({ status: "Passwords do not match" }).status(400);
-    }
-    else if (body.accessKey !== accessKey) {
-        return res.json({ status: "Invalid access key" }).status(400);
-    }
-
     await Admin.create({
         userId: body.userId,
         email: body.email,
