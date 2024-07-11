@@ -8,20 +8,22 @@ function getAdmin(id){
     return sessionIdToUserMap.get(id);
 }
 
-const accessKey = "1234567890";
+
 
 function checkSignupData(req, res) {
     const body = req.body;
 
-    const password1 = body.password1;
-    const password2 = body.password2;
+    const password = body.password;
+    const password2 = body.repassword;
 
-    if (password1 !== password2) {
-        res.json({ status: "Passwords doesn't match" })
+    if (password !== password2) {
+        return false;
     }
     else if (body.accessKey !== accessKey) {
-        res.json({ status: "Invalid Access Key" })
+        return false;
     }
+
+    return true;
 }
 
 module.exports = {setAdmin, getAdmin, checkSignupData};

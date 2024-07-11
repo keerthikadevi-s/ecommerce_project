@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const PORT = 3000;
 
-const connectMon = require("connectmon.js");
+const connectMon = require("./connectmon.js");
 const restrictToLoggedIn = require("./middlewares/authmiddle.js");
 const logReqRes = require("./middlewares/middle.js");
 const adminRouter = require("./routes/admin.js")
