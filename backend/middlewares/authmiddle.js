@@ -1,4 +1,4 @@
-const {getAdmin} = require("../services/adminService");
+const {getAdmin} = require("../services/auth.js");
 
 async function restrictToLoggedIn(req, res, next) {
     const sessionId = req.cookies?.sessionId;
