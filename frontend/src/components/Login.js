@@ -3,18 +3,24 @@ import axios from "axios";
 import "./Login.css"; // Import the CSS file
 
 function Login() {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
+  const [userID, setUserID] = useState("");
+  const [pass, setPass] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post("/admin/login", {
-        userId,
-        password,
+        userId : userID,
+        password: pass
       });
-      console.log("Login successful", response.data);
+      if(response.status === 201) {
+        alert(response.data.status);
+        window.location.href = "/update-products";
+      }
+      else {
+        alert(response.data.status);
+      }
     } catch (error) {
       console.error("Error during login", error);
     }
@@ -30,8 +36,8 @@ function Login() {
               User ID:
               <input
                 type="text"
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
+                value={userID}
+                onChange={(e) => setUserID(e.target.value)}
               />
             </label>
           </div>
@@ -40,8 +46,8 @@ function Login() {
               Password:
               <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
               />
             </label>
           </div>
