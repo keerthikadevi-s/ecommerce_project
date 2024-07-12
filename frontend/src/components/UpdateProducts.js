@@ -9,7 +9,6 @@ function UpdateProduct() {
   const [img, setImg] = useState("");
 
   useEffect(() => {
-    // Fetch all products on component mount
     const fetchProducts = async () => {
       try {
         const response = await axios.get("/api/products");
@@ -44,7 +43,6 @@ function UpdateProduct() {
         img,
       });
       console.log("Product updated:", response.data);
-      // Optionally, refresh the product list after update
       setProducts((prevProducts) =>
         prevProducts.map((p) =>
           p._id === response.data._id ? response.data : p
@@ -135,8 +133,12 @@ function UpdateProduct() {
         </div>
         <div>
           <button type="submit">Update Product</button>
-          <button onClick={handleAdd}>Add Product</button>
-          <button onClick={handleDelete}>Delete Product</button>
+          <button type="button" onClick={handleAdd}>
+            Add Product
+          </button>
+          <button type="button" onClick={handleDelete}>
+            Delete Product
+          </button>
         </div>
       </form>
 
