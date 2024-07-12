@@ -15,7 +15,7 @@ function App() {
         <header className="App-header">
           <h1>Welcome to the App</h1>
           <Routes>
-            <Route path="/products" element={<Products />} />
+            <Route path="/allproducts" element={<Products />} />
             <Route path="/update-products" element={<UpdateProducts />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />

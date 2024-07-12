@@ -2,11 +2,14 @@
 //1 - Statefull - maintains state/data on server
 //2 - Stateless - no state
 
+//CORS - cross origin resource sharing
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const cors =  require("cors");
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
 
 const connectMon = require("./connectmon.js");
 const restrictToLoggedIn = require("./middlewares/authmiddle.js");
@@ -18,7 +21,8 @@ const manageProducts = require("./routes/product.js")
 connectMon("mongodb://localhost:27017/e-commerce");
 
 //Middlewares
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cors());
 app.use(cookieParser());
 
 //Admin functionalities
