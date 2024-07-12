@@ -49,52 +49,57 @@ function Signup() {
           <div>
             <label>
               User ID:
+            </label>
               <input
                 type="text"
                 value={userID}
                 onChange={(e) => setuserID(e.target.value)}
-              />
-            </label>
+                />
+            
           </div>
           <div>
             <label>
               Email:
+            </label>
               <input
                 type="email"
                 value={adminEmail}
                 onChange={(e) => setAdminEmail(e.target.value)}
               />
-            </label>
+            
           </div>
           <div>
             <label>
               Password:
+            </label>
               <input
                 type="password"
                 value={pass}
                 onChange={(e) => setpass(e.target.value)}
               />
-            </label>
           </div>
           <div>
             <label>
               Re-enter password:
+            </label>
               <input
                 type="password"
                 value={repass}
                 onChange={(e) => setRepass(e.target.value)}
               />
-            </label>
+            
           </div>
           <div>
-            <label>
+            <label for="accessKey">
               Access Key:
+            </label>
               <input
+                id="accessKey"
                 type="text"
                 value={accessKey}
                 onChange={(e) => setAccessKey(e.target.value)}
               />
-            </label>
+            
           </div>
           <button type="submit">Signup</button>
         </form>

@@ -12,7 +12,6 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
-        <header className="App-header">
           <h1>Welcome to the App</h1>
           <Routes>
             <Route path="/allproducts" element={<Products />} />
@@ -20,7 +19,6 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
           </Routes>
-        </header>
       </div>
     </Router>
   );
