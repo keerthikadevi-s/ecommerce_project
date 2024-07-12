@@ -1,75 +1,112 @@
-// import { set } from "mongoose";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function UpdateProducts() {
-  const [prname, setPrname] = useState("");
-  const [prprice, setPrprice] = useState(0);
-  const [primg, setPrimg] = useState("");
-
-  async function handleAdd(object){
-    let response = await axios.post("/products/update",object);
-    return response;
-  }
-
-  async function handleUpdate(object){
-    let response = await axios.patch("/products/update", object);
-    return response;
-  }
-  async function handleDelete(object){
-    let response = await axios.delete("/products/update", object);
-    return response;
-  }
-
-  async function handleSubmit(e){
-    e.preventDefault();
-    let response;
-    const object = {
-      productName: prname,
-      price: prprice,
-      img: primg
-    };
-
-    if(e.target.innerHTML === "Add"){
-      response = await handleAdd(object);
-    }
-    else if(e.target.innerHTML === "Update"){
-      response = await handleUpdate(object);
-    }
-    else if(e.target.innerHTML === "Delete"){
-      response = await handleDelete(object);
-    }
-      
-    if (response.status === 401) {
-      alert(response.data.status);
-      window.location.href = "/login";
-    }
-    else {
-      alert(response.data.status);
-      setPrname("");
-      setPrprice(0);
-      setPrimg("");
-    }
-  }
+function UpdateProduct() {
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [productName, setProductName] = useState("");
+  const [price, setPrice] = useState("");
+  const [img, setImg] = useState("");
 
   useEffect(() => {
-    if (!document.cookie.includes("sessionId")) {
-      alert("You won't be able to update products without logging in. Please login as admin.");
-    }
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("/api/products");
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
   }, []);
+
+  const handleProductSelect = (product) => {
+    setSelectedProduct(product);
+    setProductName(product.productName);
+    setPrice(product.price);
+    setImg(product.img);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    if (!selectedProduct) {
+      console.error("No product selected");
+      return;
+    }
+
+    try {
+      const response = await axios.put(`/api/products/${selectedProduct._id}`, {
+        productName,
+        price,
+        img,
+      });
+      console.log("Product updated:", response.data);
+      setProducts((prevProducts) =>
+        prevProducts.map((p) =>
+          p._id === response.data._id ? response.data : p
+        )
+      );
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  };
+
+  const handleAdd = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("/api/products", {
+        productName,
+        price,
+        img,
+      });
+      console.log("Product added:", response.data);
+      setProducts([...products, response.data]);
+      setProductName("");
+      setPrice("");
+      setImg("");
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    if (!selectedProduct) {
+      console.error("No product selected");
+      return;
+    }
+
+    try {
+      await axios.delete(`/api/products/${selectedProduct._id}`);
+      console.log("Product deleted");
+      setProducts(
+        products.filter((product) => product._id !== selectedProduct._id)
+      );
+      setSelectedProduct(null);
+      setProductName("");
+      setPrice("");
+      setImg("");
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
 
   return (
     <div>
-      <h2>Update Products</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>Update Product</h2>
+      <form onSubmit={handleUpdate}>
         <div>
           <label>
-            Product name:
+            Product Name:
             <input
               type="text"
-              value={prname}
-              onChange={(e) => setPrname(e.target.value)}
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+              required
             />
           </label>
         </div>
@@ -77,29 +114,44 @@ function UpdateProducts() {
           <label>
             Price:
             <input
-              type="text"
-              value={prprice}
-              onChange={(e) => setPrprice(parseInt(e.target.value))}
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              required
             />
           </label>
         </div>
         <div>
           <label>
-            Image link:
+            Image URL:
             <input
               type="text"
-              value={primg}
-              onChange={(e) => setPrimg(e.target.value)}
+              value={img}
+              onChange={(e) => setImg(e.target.value)}
             />
           </label>
         </div>
-        <button type="submit">Add</button>
-        <button type="submit">Update</button>
-        <button type="submit">Delete</button>
+        <div>
+          <button type="submit">Update Product</button>
+          <button type="button" onClick={handleAdd}>
+            Add Product
+          </button>
+          <button type="button" onClick={handleDelete}>
+            Delete Product
+          </button>
+        </div>
       </form>
+
+      <h2>Product List</h2>
+      <ul>
+        {products.map((product) => (
+          <li key={product._id} onClick={() => handleProductSelect(product)}>
+            {product.productName} - ${product.price}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default UpdateProducts;
-
+export default UpdateProduct;
