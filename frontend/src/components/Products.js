@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import ProductCard from "./ProductCard";
-
+import "./Products.css";
 function Products() {
   const [products, setProducts] = useState([]);
 
@@ -12,15 +12,23 @@ function Products() {
     setProducts(data);
   }
 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
-    <div>
+    <div className="container">
       <h2>Products</h2>
-      <div>
+      <div className="products">
         <button onClick={fetchProducts}>Fetch Products</button>
         <div className="all-products">
-          {/* {products.map((product) => {
-            return <ProductCard props={product} />;
-          })} */}
+          {products.map((product) => (
+            <ProductCard 
+            key={product.id} 
+            productName={product.productName}
+            price = {product.price}
+            img = {product.img} />
+          ))}
         </div>
       </div>
     </div>

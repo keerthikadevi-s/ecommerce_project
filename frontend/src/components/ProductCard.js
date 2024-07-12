@@ -1,13 +1,13 @@
 import React from "react";
 import "./ProductCard.css";
 
-const ProductCard = (props) => {
+const ProductCard = ({productName, price, img}) => {
   return (
-    <div className="product-container" key={props.product._id}>
-      <img alt={props.product.productName} className="product-image" />
+    <div className="product-container" >
+      <img src={img} alt={productName} className="product-image" />
       <div className="product-desc">
-        <h3>{props.product.productName}</h3>
-        <p>{props.product.price}</p>
+        <h3>{productName}</h3>
+        <p>Rs. {price}</p>
       </div>
     </div>
   );

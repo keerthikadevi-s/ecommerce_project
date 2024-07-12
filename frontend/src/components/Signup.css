@@ -1,4 +1,5 @@
 .Signup {
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,29 +15,42 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: rgb(17, 1, 1);
   text-align: center;
+  box-sizing: border-box;
+  width: 25vw;
 }
 
 form {
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
 }
 
+form div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 label {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* margin-bottom: 15px; */
   font-size: 1em; /* Moderate font size */
 }
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"],
+input[type="number"] {
   padding: 10px;
   margin-top: 5px;
-  font-size: 0.9em; /* Moderate font size */
+  font-size: 1.2em; /* Moderate font size */
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  max-width: 300px;
+  /* max-width: 300px; */
 }
 
 button {

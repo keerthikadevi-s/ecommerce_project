@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import "./UpdateProduct.css";
 function UpdateProduct() {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -10,12 +10,9 @@ function UpdateProduct() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const response = await axios.get("/api/products");
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
+      const response = await fetch("/products");
+      const data = await response.json();
+      setProducts(data);
     };
 
     fetchProducts();
@@ -62,7 +59,7 @@ function UpdateProduct() {
         price,
         img,
       });
-      console.log("Product added:", response.data);
+      alert("Product added:", response.data);
       setProducts([...products, response.data]);
       setProductName("");
       setPrice("");
@@ -96,7 +93,7 @@ function UpdateProduct() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Update Product</h2>
       <form onSubmit={handleUpdate}>
         <div>
@@ -131,7 +128,7 @@ function UpdateProduct() {
             />
           </label>
         </div>
-        <div>
+        <div className="buttons">
           <button type="submit">Update Product</button>
           <button type="button" onClick={handleAdd}>
             Add Product
