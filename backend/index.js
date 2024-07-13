@@ -31,9 +31,10 @@ app.use("/admin",logReqRes("adminlog.txt"));
 app.use("/admin", adminRouter);
 
 //Products - addition, updation, deletion
+// app.use("/products/update",express.json());
 app.use("/products",logReqRes("productlog.txt"));
-app.use("/products", manageProducts);
 app.use("/products/update", restrictToLoggedIn);
+app.use("/products", manageProducts);
 
 app.listen(PORT, ()=> {
     console.log(`Backend server is running on http://localhost:${PORT}`);
