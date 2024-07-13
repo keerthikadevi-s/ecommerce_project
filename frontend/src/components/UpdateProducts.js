@@ -8,13 +8,13 @@ function UpdateProduct() {
   const [price, setPrice] = useState("");
   const [img, setImg] = useState("");
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch("/products");
-      const data = await response.json();
-      setProducts(data);
-    };
+  const fetchProducts = async () => {
+    const response = await fetch("/products");
+    const data = await response.json();
+    setProducts(data);
+  };
 
+  useEffect(() => {
     fetchProducts();
   }, []);
 
@@ -29,22 +29,25 @@ function UpdateProduct() {
     e.preventDefault();
 
     if (!selectedProduct) {
-      console.error("No product selected");
+      alert("No product selected");
       return;
     }
 
     try {
-      const response = await axios.put(`/api/products/${selectedProduct._id}`, {
+      const response = await axios.patch(`/products/update/${selectedProduct._id}`, {
         productName,
         price,
         img,
       });
-      console.log("Product updated:", response.data);
-      setProducts((prevProducts) =>
-        prevProducts.map((p) =>
-          p._id === response.data._id ? response.data : p
-        )
-      );
+      alert(response.data.message);
+      if (response.status === 404 || response.status === 401) {
+        return;
+      }
+      fetchProducts();
+      setSelectedProduct(null);
+      setProductName("");
+      setPrice("");
+      setImg("");
     } catch (error) {
       console.error("Error updating product:", error);
     }
@@ -54,13 +57,18 @@ function UpdateProduct() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/products", {
+      const response = await axios.post("/products/update", {
         productName,
         price,
         img,
       });
-      alert("Product added:", response.data);
-      setProducts([...products, response.data]);
+
+      alert(response.data.message);
+      if(response.status === 400 || response.status === 401){
+        return;
+      }
+      fetchProducts();
+      setSelectedProduct(null);
       setProductName("");
       setPrice("");
       setImg("");
@@ -73,16 +81,21 @@ function UpdateProduct() {
     e.preventDefault();
 
     if (!selectedProduct) {
-      console.error("No product selected");
+      alert("No product selected");
       return;
     }
 
     try {
-      await axios.delete(`/api/products/${selectedProduct._id}`);
-      console.log("Product deleted");
-      setProducts(
-        products.filter((product) => product._id !== selectedProduct._id)
-      );
+      const response = await axios.delete(`/products/update/${selectedProduct._id}`);
+      console.log(response.data);
+      // setProducts(
+      //   products.filter((product) => product._id !== selectedProduct._id)
+      // );
+      alert(response.data.message);
+      if (response.status === 404 || response.status === 401) {
+        return;
+      }
+      fetchProducts();
       setSelectedProduct(null);
       setProductName("");
       setPrice("");
@@ -143,7 +156,7 @@ function UpdateProduct() {
       <ul>
         {products.map((product) => (
           <li key={product._id} onClick={() => handleProductSelect(product)}>
-            {product.productName} - ${product.price}
+            {product.productName} - Rs. {product.price}
           </li>
         ))}
       </ul>

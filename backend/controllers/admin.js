@@ -1,7 +1,6 @@
 const Admin = require("../models/admin.js")
 const { v4: uuidv4 } = require('uuid');
 const { setAdmin} = require("../services/auth.js");
-const accessKey = "1234567890";
 
 async function adminSignup(req, res) {
     const body = req.body;
@@ -18,15 +17,13 @@ async function adminLogin(req, res) {
     const body = req.body;
 
     const admin = await Admin.findOne({userId: body.userId, password: body.password});
-    if(!admin) return res.status(404).json({status: "Incorrect username or password"});
+    if(!admin) return res.status(400).json({status: "Incorrect username or password"});
 
     const sessionId = uuidv4();
     setAdmin(sessionId, admin);
-
+    res.cookie("sessionId", sessionId)
     //Using cookies to store session id
-    res.cookie("sessionId", sessionId);
-
-    return res.status(201).json({status: "Access granted"})
+    return res.status(201).json({ status: "Access granted" });
     // .redirect("/products/update");
 }
 

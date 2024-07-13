@@ -8,7 +8,9 @@ router
 
 router
     .route("/update")
-    .patch(updateProduct)
-    .delete(deleteProduct)
     .post(addProduct);
+router
+    .route("/update/:id")
+    .patch(updateProduct)
+    .delete(deleteProduct);
 module.exports = router;
