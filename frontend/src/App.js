@@ -5,6 +5,8 @@ import Products from "./components/Products";
 import UpdateProducts from "./components/UpdateProducts";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./App.css";
 
 function App() {
@@ -12,13 +14,13 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
-          <h1>Welcome to the App</h1>
-          <Routes>
-            <Route path="/allproducts" element={<Products />} />
-            <Route path="/update-products" element={<UpdateProducts />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
+
+        <Routes>
+          <Route path="/allproducts" element={<Products />} />
+          <Route path="/update-products" element={<UpdateProducts />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </div>
     </Router>
   );

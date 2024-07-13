@@ -34,11 +34,14 @@ function UpdateProduct() {
     }
 
     try {
-      const response = await axios.patch(`/products/update/${selectedProduct._id}`, {
-        productName,
-        price,
-        img,
-      });
+      const response = await axios.patch(
+        `/products/update/${selectedProduct._id}`,
+        {
+          productName,
+          price,
+          img,
+        }
+      );
       alert(response.data.message);
       if (response.status === 404 || response.status === 401) {
         return;
@@ -64,7 +67,7 @@ function UpdateProduct() {
       });
 
       alert(response.data.message);
-      if(response.status === 400 || response.status === 401){
+      if (response.status === 400 || response.status === 401) {
         return;
       }
       fetchProducts();
@@ -86,7 +89,9 @@ function UpdateProduct() {
     }
 
     try {
-      const response = await axios.delete(`/products/update/${selectedProduct._id}`);
+      const response = await axios.delete(
+        `/products/update/${selectedProduct._id}`
+      );
       console.log(response.data);
       // setProducts(
       //   products.filter((product) => product._id !== selectedProduct._id)
