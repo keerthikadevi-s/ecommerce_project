@@ -1,68 +1,30 @@
+/* Signup.css */
+
 .Signup {
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f0f0f0;
+  background-color: #f8f9fa; /* Change this to your desired background color */
+  padding: 2rem;
+  border-radius: 0.5rem;
 }
 
 .App-header {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: rgb(17, 1, 1);
   text-align: center;
-  box-sizing: border-box;
-  width: 25vw;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-form {
-  display: flex;
+.form-horizontal .form-group {
+  margin-bottom: 1rem;
+}
+
+.form-horizontal .form-group .col-form-label {
+  text-align: left;
+  padding-right: 100px;
+
+  white-space: nowrap; /* Prevent label text from wrapping */
+}
+
+.form-horizontal .form-group .form-control {
+  display: inline-block;
   width: 100%;
-  flex-direction: column;
-  align-items: center;
-}
-
-form div {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  /* margin-bottom: 15px; */
-  font-size: 1em; /* Moderate font size */
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="number"] {
   padding: 10px;
-  margin-top: 5px;
-  font-size: 1.2em; /* Moderate font size */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-  /* max-width: 300px; */
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 0.9em; /* Moderate font size */
-  background-color: #61dafb;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #21a1f1;
 }
